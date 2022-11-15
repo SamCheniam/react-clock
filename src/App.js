@@ -15,13 +15,16 @@ function App() {
   const [timerStyles, setTimerStyles] = useState({});
   //!記得setInterval不會剛開始就執行一次，我們指定的時間後才執行第一次
   useEffect(() => {
-    setInterval(() => {
+    const tick = () => {
       setTimer({
         h: new Date().getHours(),
         m: new Date().getMinutes(),
         s: new Date().getSeconds(),
       });
-    }, 1000);
+    };
+    setInterval(tick, 1000);
+
+    return () => clearInterval(tick);
   }, []);
   //!這裡我們柏把它放進上面的useEffect裏面，但他沒辦法跟著設定
   //!而根據被好的意義，style是跟著timer去變動，也因此我們每秒去抓timer
@@ -43,6 +46,7 @@ function App() {
       styleRotateOfH: `${timer.h * 30}deg`,
     });
   }, [timer]);
+
   return (
     <div className="App">
       <div id="time">

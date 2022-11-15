@@ -1,0 +1,122 @@
+body {
+  div#root {
+    div.App {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      background-color: #2f363e;
+      div#time {
+        //* 讓每個circle置中
+        position: relative;
+        width: 250px;
+        height: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div.circle {
+          //*讓div和svg變 flex item
+          //*absolute從normal flow 移除，讓他們可以在同一個圓心點上
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          &:nth-child(1) svg {
+            //*指定每個svg圖的寬和長，使之成為圓形
+            width: 250px;
+            height: 250px;
+            circle {
+              //*圓的周長240*3.14=753.6
+              stroke-dasharray: 760;
+              stroke-dashoffset: 760;
+            }
+          }
+          &:nth-child(2) svg {
+            width: 210px;
+            height: 210px;
+            circle {
+              stroke-dasharray: 630;
+              stroke-dashoffset: 630;
+            }
+          }
+          &:nth-child(3) svg {
+            width: 170px;
+            height: 170px;
+            circle {
+              stroke-dasharray: 510;
+              stroke-dashoffset: 510;
+            }
+          }
+          svg {
+            //*transform-orgin預設值為center(50%,50%)
+            //!所以把rotate設定在svg裏
+            position: relative;
+            rotate: 270deg;
+            circle {
+              //*transform-orgin預設值為0,0
+              width: 100%;
+              height: 100%;
+              fill: transparent;
+              //*svg的邊框
+              stroke: var(--clr);
+              stroke-width: 5;
+              transform: translate(5px, 5px);
+              opacity: 0.25;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//*時鐘上跟著跑的點
+.dots {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 10;
+  &::before {
+    //*圓形點
+    content: "";
+    position: absolute;
+    top: -3px;
+    width: 15px;
+    height: 15px;
+    background-color: var(--clr);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--clr), 0 0 40px var(--clr), 0 0 60px var(--clr),
+      0 0 80px var(--clr);
+  }
+}
+
+//*時鐘內的文字
+div.timerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  color: white;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 1.5rem;
+  gap: 15px;
+  font-weight: bold;
+  div.timerH::after,
+  div.timerM::after {
+    content: ":";
+    position: absolute;
+    translate: 4px 0px;
+  }
+  div#ampm {
+    position: absolute;
+    top: 41%;
+    font-size: 0.8rem;
+    right: 26%;
+  }
+}
